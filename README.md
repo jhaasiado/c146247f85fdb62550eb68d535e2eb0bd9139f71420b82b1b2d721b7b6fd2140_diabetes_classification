@@ -52,6 +52,19 @@ Why this structure for containerization and orchestration?
   3) Run the full pipeline with logging: `uv run python main.py`
   4) Optional (Windows low disk cache): `Set-Item -Path Env:UV_CACHE_DIR -Value ".uv-cache"`
 
+- Containerization and Airflow (Compose):
+  - Verify Docker: `docker --version` (install from https://docs.docker.com/get-docker/)
+  - Pull Airflow image: `docker pull apache/airflow:2.9.3`
+  - Navigate to Airflow compose dir: `cd deploy/airflow`
+  - Set Airflow UID (Linux/WSL, recommended): `export AIRFLOW_UID=$(id -u)`
+  - Initialize Airflow DB and admin user:
+    - Docker Compose V2: `docker compose up airflow-init`
+  - Start services (webserver, scheduler, postgres):
+    - `docker compose up -d`
+  - Access UI: http://localhost:8080 (user: `airflow`, password: `airflow`)
+  - DAGs path mounted from: `deploy/airflow/dags`
+  - Project mounted at: `/opt/airflow/project` for operators to import code
+
 ---
 
 ## Running Visualizations
