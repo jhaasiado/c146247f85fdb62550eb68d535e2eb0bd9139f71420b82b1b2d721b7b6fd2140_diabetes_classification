@@ -1,12 +1,13 @@
-# Diabetes Prediction Pipeline
+# 🩺 Diabetes Prediction Pipeline
 
 This repository implements a reproducible binary classification pipeline to predict diabetes presence from medical measurements (e.g., glucose, BMI, age). It follows an MLOps-oriented workflow with clear preprocessing, training, evaluation, and environment setup.
 
-Dataset: Kaggle “Diabetes Dataset (Pima Indians)” — https://www.kaggle.com/datasets/akshaydattatraykhare/diabetes-dataset
+Dataset: **[Kaggle Diabetes Dataset (Pima Indians)](https://www.kaggle.com/datasets/akshaydattatraykhare/diabetes-dataset)**.
+Chosen for its popularity, reproducibility, and simplicity to showcase a **production-driven ML pipeline**.
 
 ---
 
-## Folder Structure
+## 📂 Folder Structure
 
 ```
 .
@@ -30,26 +31,36 @@ Dataset: Kaggle “Diabetes Dataset (Pima Indians)” — https://www.kaggle.com
 ```
 
 ---
+## ⚙️ Setup Instructions
 
-## Setup Instructions
+**Prerequisites**: Python 3.12, Git, [UV](https://docs.astral.sh/uv/).
 
-- Prerequisites: Python 3.12, Git, and UV (https://docs.astral.sh/uv/)
-- Steps:
-  1) Ensure `.python-version` contains `3.12`.
-  2) Install dependencies and create venv: `uv sync`
-  3) Run the full pipeline with logging: `uv run python main.py`
-  4) Optional (Windows low disk cache): `Set-Item -Path Env:UV_CACHE_DIR -Value ".uv-cache"`
+1. Clone the repo and enter project folder.
+2. Verify Python version (`.python-version` → 3.12).
+3. Install dependencies + set up venv:
+   ```bash
+   uv sync
+   ```
+4. Run the pipeline with logging:
+   ```bash
+   uv run python main.py
+   ```
+5. (Optional, Windows low disk cache issue):
+   ```powershell
+   Set-Item -Path Env:UV_CACHE_DIR -Value ".uv-cache"
+   ```
 
 ---
 
-## Running Visualizations
+## 📊 Running Visualizations and References
 
 - Reference notebook: `notebooks/diabetes-eda-ml-prediction.ipynb`
 - Preprocessing uses Robust scaling consistent with the pipeline.
+- When main.py is ran, it shows the evaluation metrics per model in the CLI.
 
 ---
 
-## Outputs
+## 🔍 Outputs
 
 Running the pipeline produces:
 - Preprocessed data: `data/preprocessed/diabetes_scaled.csv`
@@ -60,7 +71,7 @@ Running the pipeline produces:
 
 ---
 
-## Pre-commit Hooks
+## 🧹 Pre-commit Hooks
 
 Ensures clean, secure, consistent code before commits:
 - Hygiene: trailing-whitespace, end-of-file-fixer, check-yaml/json/toml
@@ -71,18 +82,16 @@ Ensures clean, secure, consistent code before commits:
 
 Run manually: `uv run pre-commit run --all-files`
 
----
-
-## Reproducibility Notes
-
-- Python pinned to 3.12
-- Dependencies locked via `uv.lock`
-- Export `requirements.txt`: `uv export --no-hashes -o requirements.txt`
-
----
-
-## Challenges
+## ⚔️ Challenges
 
 - Disk space and UV cache: During setup, large wheels (numpy, statsmodels, pywin32) failed to extract due to low space in the default UV cache location. Fix: set `UV_CACHE_DIR=.uv-cache` and re‑run `uv sync` so UV uses a project-local cache.
 
 - Pre-commit and repo hygiene: Early imports failed while wiring the pipeline; adding `src/__init__.py` fixed package imports for `main.py`. Large generated data and `.pkl` model files exceeded pre-commit size thresholds, so they’re ignored via `.gitignore` and excluded in pre-commit.
+
+--
+
+## 🔁 Reproducibility Notes
+
+- Python pinned to 3.12
+- Dependencies locked via `uv.lock`
+- Export `requirements.txt`: `uv export --no-hashes -o requirements.txt`
