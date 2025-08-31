@@ -5,6 +5,7 @@ models/
 results/
 .venv/
 .uv-cache/
+.pre-commit-cache/
 
 # Common Python ignores
 __pycache__/
