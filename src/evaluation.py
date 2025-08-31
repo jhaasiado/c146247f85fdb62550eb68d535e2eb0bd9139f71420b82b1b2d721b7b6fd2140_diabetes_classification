@@ -9,7 +9,7 @@ from sklearn.metrics import accuracy_score, classification_report, f1_score
 
 from .utils import ensure_dir
 
-RESULTS_DIR = Path("artifacts/results")
+RESULTS_DIR = Path("results")
 
 
 def evaluate_model(

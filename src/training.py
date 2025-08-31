@@ -14,8 +14,8 @@ from xgboost import XGBClassifier
 from .data_preprocessing import DEFAULT_PREPROCESSED_PATH, DEFAULT_TARGET, preprocess
 from .utils import ensure_dir
 
-RESULTS_DIR = Path("artifacts/results")
-MODELS_DIR = Path("artifacts/models")
+RESULTS_DIR = Path("results")
+MODELS_DIR = Path("models")
 
 
 def load_preprocessed(
