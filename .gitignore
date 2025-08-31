@@ -1,6 +1,8 @@
 # Ignore generated artifacts and environments
 artifacts/
 data/
+models/
+results/
 .venv/
 .uv-cache/
 
