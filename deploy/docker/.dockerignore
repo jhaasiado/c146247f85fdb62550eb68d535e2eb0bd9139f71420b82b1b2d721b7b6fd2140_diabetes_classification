@@ -1,0 +1,15 @@
+.venv/
+.uv-cache/
+.pre-commit-cache/
+__pycache__/
+*.pyc
+
+data/
+models/
+results/
+
+.git/
+.gitignore
+.DS_Store
+.vscode/
+.idea/

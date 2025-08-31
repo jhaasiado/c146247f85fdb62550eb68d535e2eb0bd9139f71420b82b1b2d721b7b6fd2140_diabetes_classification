@@ -6,6 +6,7 @@ results/
 .venv/
 .uv-cache/
 .pre-commit-cache/
+deploy/airflow/logs/
 
 # Common Python ignores
 __pycache__/
