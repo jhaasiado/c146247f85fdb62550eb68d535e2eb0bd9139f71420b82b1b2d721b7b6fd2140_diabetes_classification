@@ -69,6 +69,7 @@ Running the pipeline produces:
 - Evaluation results →
   - `results/metrics.json`
   - `results/results.txt` (classification reports)
+- When `main.py` is ran, it will also print out in the CLI the classification report generated per model.
 
 ---
 
@@ -94,3 +95,11 @@ uv run pre-commit run --all-files
 - Python pinned to **3.12**
 - Dependencies locked via `uv.lock`
 - Exported `requirements.txt` for `pip install -r requirements.txt`
+
+---
+
+## Challenges
+
+The first major challenge on this assignment is the lack of disk space during installation of UV. The libraries that I am supposed to install in the environment and extracting large wheels (numpy, statsmodels, pywin32) was not proceeding due to shortage of disk space. In order to fix this, I had to set UV_CACHE_DIR=.uv-cache to keep cache in project and retried sync.
+
+The second one is on the pre-commit hooks where when I was setting up the src files, I had to refactor some of the codes to ensure that the main.py pipeline and imports are working. Initially, I had problems with imports but were able to resolve it by adding init.py under src. Some problem also include committing data and .pkl files that exceed size threshold. I had to ensure that they are part of the .gitignore.
