@@ -40,6 +40,23 @@ repos:
         args: ["--ignore-words-list=te,hist"]
         exclude: '.*\.ipynb$'
 
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.35.1
+    hooks:
+      - id: yamllint
+        files: '\.(yaml|yml)$'
+        args: ["-d", "{extends: default, rules: {line-length: disable}}"]
+
+  # Hadolint via Docker image; mark as manual to avoid requiring Docker during normal commits
+  - repo: local
+    hooks:
+      - id: hadolint
+        name: hadolint (Dockerfile lint)
+        language: docker_image
+        entry: ghcr.io/hadolint/hadolint:latest hadolint
+        files: '(^|/)Dockerfile$|(^|/)docker/.*Dockerfile$'
+        stages: [manual]
+
   - repo: https://github.com/Yelp/detect-secrets
     rev: v1.5.0
     hooks:
