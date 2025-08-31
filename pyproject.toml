@@ -1,0 +1,58 @@
+[project]
+name = "hw1-mlops"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "flask<2.3",
+    "werkzeug<3.0",
+    "apache-airflow>=3.0.3",
+    "ipykernel>=6.29.5",
+    "jupyter>=1.1.1",
+    "matplotlib>=3.10.5",
+    "numpy>=2.3.1",
+    "pandas>=2.3.1",
+    "scikit-learn>=1.7.0",
+    "seaborn>=0.13.2",
+    "xgboost",
+    "lightgbm",
+    "mlflow==3.1.4",
+    "evidently==0.7.11",
+    "psycopg2-binary==2.9.10",
+]
+
+[tool.black]
+line-length = 100
+target-version = ["py311"]
+exclude = "^(artifacts|reports|data)/"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+fix = true
+extend-select = ["I"]
+extend-ignore = ["E203","E501"]
+exclude = ["artifacts","reports","data"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+ignore_missing_imports = true
+exclude = "(artifacts|reports|data)/"
+
+[tool.bandit]
+skips = ["B101"]
+
+[project.optional-dependencies]
+dev = [
+  "pre-commit",
+  "black",
+  "ruff",
+  "mypy",
+  "bandit",
+  "codespell",
+  "detect-secrets",
+  "nbstripout",
+  "nbqa",
+]
