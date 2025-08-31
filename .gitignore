@@ -1,0 +1,17 @@
+# Ignore generated artifacts and environments
+artifacts/
+data/
+.venv/
+.uv-cache/
+
+# Common Python ignores
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+*.egg
+*.log
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
