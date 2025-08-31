@@ -37,7 +37,7 @@ def recommended_models(random_state: int = 42):
     Order: KNN, Logistic Regression, Random Forest, XGBoost.
     """
 
-    # KNN first
+    # KNN
     knn = KNeighborsClassifier(
         n_neighbors=15,
         weights="distance",
@@ -46,7 +46,7 @@ def recommended_models(random_state: int = 42):
         n_jobs=-1,
     )
 
-    # Logistic Regression second
+    # Logistic Regression
     lr = LogisticRegression(
         penalty="l2",
         C=1.0,
@@ -55,7 +55,7 @@ def recommended_models(random_state: int = 42):
         random_state=random_state,
     )
 
-    # Random Forest third
+    # Random Forest
     rf = RandomForestClassifier(
         n_estimators=300,  # more trees for stability
         max_depth=8,  # control overfitting
@@ -66,7 +66,7 @@ def recommended_models(random_state: int = 42):
         random_state=random_state,
     )
 
-    # XGBoost fourth
+    # XGBoost
     xgb = XGBClassifier(
         n_estimators=300,
         max_depth=4,

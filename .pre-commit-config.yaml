@@ -19,6 +19,7 @@ repos:
       - id: ruff
         args: ["--fix"]
         additional_dependencies: []
+        exclude: '.*\.ipynb$'
 
   - repo: https://github.com/psf/black
     rev: 24.10.0
@@ -37,7 +38,7 @@ repos:
     hooks:
       - id: codespell
         args: ["--ignore-words-list=te,hist"]
-        exclude: '\\.ipynb$'
+        exclude: '.*\.ipynb$'
 
   - repo: https://github.com/Yelp/detect-secrets
     rev: v1.5.0
