@@ -5,7 +5,7 @@ from typing import Tuple
 
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import RobustScaler
 
 DEFAULT_RAW_PATH = Path("data/raw/diabetes.csv")
 DEFAULT_PREPROCESSED_PATH = Path("data/preprocessed/diabetes_scaled.csv")
@@ -28,10 +28,10 @@ def load_csv(input_path: Path | str = DEFAULT_RAW_PATH) -> pd.DataFrame:
     return pd.read_csv(path)
 
 
-def minmax_scale(
+def robust_scale(
     df: pd.DataFrame, target_col: str = DEFAULT_TARGET
 ) -> Tuple[pd.DataFrame, pd.Series]:
-    """Scale feature columns to [0, 1]; keep target unchanged."""
+    """Scale features using RobustScaler (median/IQR); keep target unchanged."""
 
     if target_col not in df.columns:
         raise ValueError(f"Target column '{target_col}' not found in DataFrame")
@@ -39,7 +39,7 @@ def minmax_scale(
     y = df[target_col]
     X = df.drop(columns=[target_col])
 
-    scaler = MinMaxScaler()  # fit on features only
+    scaler = RobustScaler()  # fit on features only; robust to outliers
     X_scaled = pd.DataFrame(scaler.fit_transform(X), columns=X.columns)
     return X_scaled, y
 
@@ -49,14 +49,14 @@ def preprocess(
     output_csv: Path | str = DEFAULT_PREPROCESSED_PATH,
     target_col: str = DEFAULT_TARGET,
 ) -> Path:
-    """Load raw CSV, apply MinMax scaling, and save to preprocessed path.
+    """Load raw CSV, apply Robust scaling, and save to preprocessed path.
 
     The output is a single CSV combining scaled features and the original target.
     Returns the output path.
     """
 
     df = load_csv(input_csv)  # read CSV
-    X_scaled, y = minmax_scale(df, target_col=target_col)  # scale features
+    X_scaled, y = robust_scale(df, target_col=target_col)  # robust scaling
     out = Path(output_csv)
     ensure_dir(out.parent)
     scaled_df = pd.concat([X_scaled, y.rename(target_col)], axis=1)  # combine X and y
@@ -70,14 +70,14 @@ def preprocess_data(
     test_size: float = 0.2,
     random_state: int = 42,
 ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]:
-    """Load CSV, MinMax-scale features, and split into train/test.
+    """Load CSV, Robust-scale features, and split into train/test.
 
     Returns (X_train, X_test, y_train, y_test).
     Also writes a combined scaled CSV to `data/preprocessed/diabetes_scaled.csv`.
     """
 
     df = load_csv(input_csv)
-    X_scaled, y = minmax_scale(df, target_col=target_col)
+    X_scaled, y = robust_scale(df, target_col=target_col)
 
     # Persist a scaled copy for reference
     ensure_dir(DEFAULT_PREPROCESSED_PATH.parent)
