@@ -24,7 +24,6 @@ Dataset: Kaggle “Diabetes Dataset (Pima Indians)” — https://www.kaggle.com
 ├── models/                   # Trained model pickles
 ├── results/                  # Metrics + text reports
 ├── deploy/
-│   ├── docker/               # Dockerfiles and build context for container images
 │   └── airflow/
 │       ├── dags/             # Airflow DAGs (workflow orchestration scripts)
 │       └── logs/             # Airflow logs (placeholder; managed by Airflow)
@@ -64,6 +63,27 @@ Why this structure for containerization and orchestration?
   - Access UI: http://localhost:8080 (user: `airflow`, password: `airflow`)
   - DAGs path mounted from: `deploy/airflow/dags`
   - Project mounted at: `/opt/airflow/project` for operators to import code
+
+---
+
+## Docker Setup (App Image)
+
+- Dockerfile: `docker/Dockerfile` uses a multi-stage build on `python:3.12-slim`.
+  - Stage 1 (builder) installs `uv` and syncs dependencies into a local `.venv` using `pyproject.toml` and `uv.lock` if present.
+  - Stage 2 (runtime) copies only the `.venv`, `src/`, and `main.py`, minimizing image size and layers for faster pulls in CI/CD.
+  - Entry point runs `python -m src.run_pipeline`, which delegates to `main.main()`.
+
+- Build the image:
+  - `docker build -f docker/Dockerfile -t diabetes-pipeline:latest .`
+
+- Run the container (mount local data and outputs):
+  - Windows (PowerShell):
+    - `docker run --rm -v ${PWD}\data:/app/data -v ${PWD}\models:/app/models -v ${PWD}\results:/app/results diabetes-pipeline:latest`
+  - Linux/macOS:
+    - `docker run --rm -v "$(pwd)/data:/app/data" -v "$(pwd)/models:/app/models" -v "$(pwd)/results:/app/results" diabetes-pipeline:latest`
+
+- What runs:
+  - The container executes the full pipeline (preprocess → train → evaluate) reproducibly, writing outputs to the mounted `models/` and `results/` directories.
 
 ---
 

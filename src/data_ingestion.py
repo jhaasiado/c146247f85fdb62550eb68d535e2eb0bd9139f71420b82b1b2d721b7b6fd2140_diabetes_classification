@@ -16,14 +16,11 @@ import kagglehub
 import pandas as pd
 from kagglehub import KaggleDatasetAdapter
 
+from .utils import ensure_dir
+
 DEFAULT_DATASET = "akshaydattatraykhare/diabetes-dataset"
 DEFAULT_FILE_PATH = "diabetes.csv"  # file path inside the dataset
 DEFAULT_OUTPUT_DIR = Path("data/preprocessed")
-
-
-def ensure_dir(path: Path) -> None:
-    """Create a directory if it doesn't already exist."""
-    path.mkdir(parents=True, exist_ok=True)
 
 
 def load_diabetes_dataset(file_path: str = DEFAULT_FILE_PATH) -> pd.DataFrame:

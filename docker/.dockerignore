@@ -1,3 +1,4 @@
+# Exclude local dev files and generated artifacts from the build context
 .venv/
 .uv-cache/
 .pre-commit-cache/

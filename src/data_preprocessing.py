@@ -7,14 +7,11 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import RobustScaler
 
+from .utils import ensure_dir
+
 DEFAULT_RAW_PATH = Path("data/raw/diabetes.csv")
 DEFAULT_PREPROCESSED_PATH = Path("data/preprocessed/diabetes_scaled.csv")
 DEFAULT_TARGET = "Outcome"
-
-
-def ensure_dir(path: Path) -> None:
-    """Create directory if missing."""
-    path.mkdir(parents=True, exist_ok=True)
 
 
 def load_csv(input_path: Path | str = DEFAULT_RAW_PATH) -> pd.DataFrame:
