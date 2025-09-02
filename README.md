@@ -131,3 +131,5 @@ Run manually: `uv run pre-commit run --all-files`
 - My biggest challenge was importing the project code inside Airflow while keeping all artifacts (models, results, preprocessed data) visible on the host. By default, Airflow runs in containers whose working directory and Python path don’t know about my repo leading to ModuleNotFoundError for my local packages. I had two steps in the solution:
 1. I mounted the repository root into the containers (at /opt/airflow/project) and set PYTHONPATH accordingly in the compose file so src/... imports resolve.
 2. In the DAG, prepend that path to sys.path and chdir to the mounted project root before running any task code, so all relative paths in your scripts land back in the repo.
+
+- Another minor challenge was installing Docker Desktop and WSL since I am using my work laptop and I need admin permissions.
